@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testcases>
+  <testcase name="initiate recording api for new room">
+    <summary>initiate recording api for new room</summary>
+    <preconditions>mixer server should be configured
+postman collection should be configured in postman</preconditions>
+    <steps>
+      <step>
+        <step_number>1</step_number>
+        <actions>initiate the API and check in database by 
+select * from recording where room_id='&lt;given room id&gt;'</actions>
+        <expectedresults>data should be saved in the database</expectedresults>
+      </step>
+      <step>
+        <step_number>2</step_number>
+        <actions>intiate the API again for same room ID</actions>
+        <expectedresults>it should show 500 error</expectedresults>
+      </step>
+    </steps>
+  </testcase>
+  <testcase name="get recording info API">
+    <summary>get recording info API</summary>
+    <preconditions>mixer server should be configured
+postman collection should be configured in postman
+</preconditions>
+    <steps>
+      <step>
+        <step_number>1</step_number>
+        <actions>janus-video-composer service should be stopped and
+call get recordingInfo api from postman for which room id exist in recording db</actions>
+        <expectedresults>it should show recording info with status todo</expectedresults>
+      </step>
+      <step>
+        <step_number>2</step_number>
+        <actions>start janus-video-composer service and again hit the API</actions>
+        <expectedresults>it should show in progress/done status for recording</expectedresults>
+      </step>
+      <step>
+        <step_number>3</step_number>
+        <actions>call get recording info for which room id not exist in recording db</actions>
+        <expectedresults>it should show 5x error</expectedresults>
+      </step>
+    </steps>
+  </testcase>
+  <testcase name="download API">
+    <summary>download API</summary>
+    <preconditions>mixer server should be configured
+</preconditions>
+    <steps>
+      <step>
+        <step_number>1</step_number>
+        <actions>open download api url in chrome with room id for which it exist in recording db</actions>
+        <expectedresults>it should download the mp4 file</expectedresults>
+      </step>
+      <step>
+        <step_number>2</step_number>
+        <actions>open download api url in chrome with room id for which it not exist in recording db</actions>
+        <expectedresults>it should show 5x error</expectedresults>
+      </step>
+    </steps>
+  </testcase>
+</testcases>

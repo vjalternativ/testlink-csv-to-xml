@@ -1,0 +1,14 @@
+testcaseId,test case name,sumamary,precondition,action,result
+1,initiate recording api for new room,initiate recording api for new room,"mixer server should be configured
+postman collection should be configured in postman","initiate the API and check in database by 
+select * from recording where room_id='<given room id>'",data should be saved in the database
+,,,,intiate the API again for same room ID,it should show 500 error
+2,get recording info API,get recording info API,"mixer server should be configured
+postman collection should be configured in postman
+","janus-video-composer service should be stopped and
+call get recordingInfo api from postman for which room id exist in recording db",it should show recording info with status todo
+,,,,start janus-video-composer service and again hit the API,it should show in progress/done status for recording
+,,,,call get recording info for which room id not exist in recording db,it should show 5x error
+3,download API,download API,"mixer server should be configured
+",open download api url in chrome with room id for which it exist in recording db,it should download the mp4 file
+,,,,open download api url in chrome with room id for which it not exist in recording db,it should show 5x error
